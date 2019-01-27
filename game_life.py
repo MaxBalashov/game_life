@@ -140,19 +140,22 @@ if __name__ == '__main__':
     curses.noecho()
     curses.cbreak()
     
+    cnt = 1
     try:
         while True:
-            stdscr.addstr(0, 0, 'empty : 0, rock : 1, fish : 2, shrimp : 3')
-            stdscr.addstr(1, 0, np.array2string(ocean))
+            stdscr.addstr(0, 0, 'Notation: empty=0, rock=1, fish=2, shrimp=3')
+            stdscr.addstr(1, 0, 'Number of ocean epoch: {}'.format(cnt))
+            stdscr.addstr(2, 0, np.array2string(ocean))
             stdscr.refresh()
             sleep(1)
             ocean_prev = np.copy(ocean)
             ocean = step_ocean(ocean)
+            cnt += 1
             # если океан стационарен, то конец цикла
             if np.array_equal(ocean_prev, ocean):
-                stdscr.addstr(n + 1, 0, 'Ocean is fixed!')
+                stdscr.addstr(n + 2, 0, 'Ocean is fixed!')
                 for i in range(5):
-                    stdscr.addstr(n + 2, 0, 'Application quits in next 5 seconds: {}'.format(i+1))
+                    stdscr.addstr(n + 3, 0, 'Application quits in next 5 seconds: {}'.format(i+1))
                     stdscr.refresh()
                     sleep(1)
                 break
